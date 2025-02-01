@@ -89,3 +89,110 @@ Follow these steps to set up the project on your local machine.
 
 ```sh
 curl -X GET "http://127.0.0.1:8000/api/faqs/"
+```
+
+#### Create FAQ
+
+```sh
+curl -X POST "http://127.0.0.1:8000/api/faqs/" -H "Content-Type: application/json" -d '{
+    "question": "What is Django?",
+    "answer": "Django is a web framework."
+}'
+```
+
+#### Retrieve FAQ
+
+```sh
+curl -X GET "http://127.0.0.1:8000/api/faqs/1/"
+```
+
+#### Update FAQ
+
+```sh
+curl -X PUT "http://127.0.0.1:8000/api/faqs/1/" -H "Content-Type: application/json" -d '{
+    "question": "What is Django?",
+    "answer": "Django is a high-level Python web framework."
+}'
+```
+
+#### Delete FAQ
+
+```sh
+curl -X DELETE "http://127.0.0.1:8000/api/faqs/1/"
+```
+
+### Language Selection
+
+You can select the language for the question using the `?lang=` query parameter. For example:
+
+```sh
+curl -X GET "http://127.0.0.1:8000/api/faqs/?lang=hi"
+```
+
+## Running Tests
+
+We use pytest for running tests. Ensure all tests pass before submitting a pull request.
+
+```sh
+pytest
+```
+
+## Docker Setup
+
+To run the project using Docker, follow these steps:
+
+1. **Build and run the Docker container:**
+
+    ```sh
+    docker-compose build
+    docker-compose up
+    ```
+
+2. **Apply migrations:**
+
+    After the container is up and running, open a new terminal and run the following command to apply migrations:
+
+    ```sh
+    docker-compose exec web python manage.py migrate
+    ```
+
+## Contribution Guidelines
+
+We welcome contributions to improve this project. Please follow these guidelines:
+
+1. **Fork the repository:**
+
+    Click the "Fork" button at the top right of this page.
+
+2. **Clone your fork:**
+
+    ```sh
+    git clone https://github.com/yourusername/faq-management.git
+    cd faq-management
+    ```
+
+3. **Create a branch:**
+
+    ```sh
+    git checkout -b feature-branch
+    ```
+
+4. **Make your changes and commit them:**
+
+    ```sh
+    git commit -m "Description of your changes"
+    ```
+
+5. **Push to your fork:**
+
+    ```sh
+    git push origin feature-branch
+    ```
+
+6. **Create a pull request:**
+
+    Go to the original repository and click the "New Pull Request" button.
+
+## License
+
+This project is licensed under the MIT License. See the LICENSE file for details.
