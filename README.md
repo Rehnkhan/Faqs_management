@@ -3,6 +3,7 @@
 A Django-based FAQ management system with multilingual support and a REST API.
 
 ## Table of Contents
+- [Project Structure](#project-structure)
 
 - [Installation](#installation)
 - [Usage](#usage)
@@ -11,6 +12,51 @@ A Django-based FAQ management system with multilingual support and a REST API.
 - [Docker Setup](#docker-setup)
 - [Contribution Guidelines](#contribution-guidelines)
 - [License](#license)
+
+
+
+## Project Structure
+
+The project structure is as follows:
+
+```
+faq-management/
+├── Faqs_management/
+│   ├── __init__.py
+│   ├── asgi.py
+│   ├── settings.py
+│   ├── urls.py
+│   ├── wsgi.py
+│   ├── pytest.ini
+│   └── .flake8
+├── Faqsapp/
+│   ├── __init__.py
+│   ├── admin.py
+│   ├── apps.py
+│   ├── languages.py
+│   ├── migrations/
+│   │   ├── __init__.py
+│   │   ├── 0001_initial.py
+│   │   ├── 0002_alter_faq_options_faq_answer_bn_faq_answer_hi_and_more.py
+│   │   └── 0003_alter_faq_options_remove_faq_answer_bn_and_more.py
+│   ├── models.py
+│   ├── redis_handler.py
+│   ├── serializer.py
+│   ├── tests.py
+│   ├── urls.py
+│   ├── utils.py
+│   └── views.py
+├── docker-compose.yml
+├── Dockerfile
+├── manage.py
+├── requirements.txt
+├── .dockerignore
+├── .env
+├── .gitignore
+├── license
+└── README.md
+```
+
 
 ## Installation
 
@@ -123,10 +169,26 @@ curl -X DELETE "http://127.0.0.1:8000/api/faqs/1/"
 
 ### Language Selection
 
-You can select the language for the question using the `?lang=` query parameter. For example:
+You can select the language for the question using the `?lang=` query parameter. 
+You can translate to all languages supported by Google Translate by specifying the desired language code. 
+For example:
+
+To translate to Bengali, use `?lang=bn`:
+
+```sh
+curl -X GET "http://127.0.0.1:8000/api/faqs/?lang=bn"
+```
+
+To translate to Hindi, use `?lang=hi`:
 
 ```sh
 curl -X GET "http://127.0.0.1:8000/api/faqs/?lang=hi"
+```
+
+To translate to Spanish, use `?lang=es`:
+
+```sh
+curl -X GET "http://127.0.0.1:8000/api/faqs/?lang=es"
 ```
 
 ## Running Tests
@@ -167,7 +229,7 @@ We welcome contributions to improve this project. Please follow these guidelines
 2. **Clone your fork:**
 
     ```sh
-    git clone https://github.com/yourusername/faq-management.git
+    git clone https://github.com/Rehnkhan/faq-management.git
     cd faq-management
     ```
 
