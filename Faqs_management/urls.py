@@ -17,8 +17,10 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 
-
+# List of URL patterns to route URLs to views
 urlpatterns = [
+    # Route for the admin interface
     path('admin/', admin.site.urls),
+    # Route for the API, includes URLs from the Faqsapp application
     path('api/', include('Faqsapp.urls')),
 ]

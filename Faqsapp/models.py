@@ -4,9 +4,11 @@ from .redis_handler import RedisHandler
 from googletrans import LANGUAGES
 from .utils import translate_text
 
+# Initialize Redis handler
 redis_handler = RedisHandler()
 
 class FAQ(models.Model):
+    # Define language choices for translation
     LANGUAGE_CHOICES = [
         'af', 'sq', 'am', 'ar', 'hy', 'az', 'eu', 'be', 'bn', 'bs',
         'bg', 'ca', 'ceb', 'ny', 'zh-cn', 'zh-tw', 'co', 'hr', 'cs',
@@ -20,6 +22,8 @@ class FAQ(models.Model):
         'su', 'sw', 'sv', 'tg', 'ta', 'te', 'th', 'tr', 'uk', 'ur',
         'ug', 'uz', 'vi', 'cy', 'xh', 'yi', 'yo', 'zu'
     ]
+    
+    # Define model fields
     question = models.TextField()
     answer = RichTextField()  # WYSIWYG editor for answer
     question_translated = models.JSONField(default=dict, blank=True)
@@ -28,6 +32,7 @@ class FAQ(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def save(self, *args, **kwargs):
+        # Use atomic transaction to ensure data integrity
         with transaction.atomic():
             if not self.pk:
                 self.translate_content()  # Translate content if it's a new FAQ
@@ -48,6 +53,7 @@ class FAQ(models.Model):
             redis_handler.set_cache_with_transaction(cache_key, faq_data)
 
     def translate_content(self):
+        # Translate question and answer to all languages in LANGUAGE_CHOICES
         try:
             for lang in self.LANGUAGE_CHOICES:
                 if lang != "en": 
@@ -57,10 +63,13 @@ class FAQ(models.Model):
             print(f"Translation failed: {e}")
 
     def get_translated_question(self, lang='en'):
+        # Get translated question for the specified language
         return self.question_translated.get(lang, self.question)
 
     def get_translated_answer(self, lang='en'):
+        # Get translated answer for the specified language
         return self.answer_translated.get(lang, self.answer)
 
     def __str__(self):
+        # String representation of the FAQ
         return self.question

@@ -3,6 +3,7 @@ from .models import FAQ
 from ckeditor.widgets import CKEditorWidget
 from django import forms
 
+# Define a custom form for the FAQ model to use CKEditor for the answer field
 class FAQAdminForm(forms.ModelForm):
     answer = forms.CharField(widget=CKEditorWidget())
 
@@ -10,6 +11,7 @@ class FAQAdminForm(forms.ModelForm):
         model = FAQ
         fields = '__all__'
 
+# Register the FAQ model with the custom admin interface
 @admin.register(FAQ)
 class FAQAdmin(admin.ModelAdmin):
     form = FAQAdminForm
@@ -17,6 +19,7 @@ class FAQAdmin(admin.ModelAdmin):
     search_fields = ('question', 'answer')
     list_filter = ('created_at',)
 
+    # Define the layout of the admin form
     fieldsets = (
         (None, {
             'fields': ('question', 'answer')
@@ -28,4 +31,4 @@ class FAQAdmin(admin.ModelAdmin):
             'fields': ('created_at', 'updated_at')
         }),
     )
-    readonly_fields = ('created_at', 'updated_at')
+    readonly_fields = ('created_at', 'updated_at')  # Make created_at and updated_at fields read-only
